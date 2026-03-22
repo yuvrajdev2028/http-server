@@ -1,0 +1,34 @@
++-------------------------------------------------------+
+|                 C++ HTTP Server Core                  |
++-------------------------------------------------------+
+|                                                       |
+|   [ Server ]                                          |
+|   Listens on port 8080                                |
+|   Accepts connections                                 |
+|         |                                             |
+|         v                                             |
+|   +---------------------------------------+           |
+|   |         std::thread per Client        |           |
+|   +---------------------------------------+           |
+|         |                                             |
+|         | 1. Read string buffer                       |
+|         v                                             |
+|   [ HttpRequest ]                                     |
+|   Parses Request Line & Headers                       |
+|         |                                             |
+|         | 2. Extract Method, Path, Body               |
+|         v                                             |
+|   [ Route Handler / main logic ]                      |
+|   Check path and build response elements              |
+|         |                                             |
+|         | 3. Set Status, Headers, Body                |
+|         v                                             |
+|   [ HttpResponse ]                                    |
+|   Formats proper HTTP string response                 |
+|         |                                             |
+|         | 4. to_string()                              |
+|         v                                             |
+|   +---------------------------------------+           |
+|   |  Send () over TCP Socket to Client    |           |
+|   +---------------------------------------+           |
++-------------------------------------------------------+
