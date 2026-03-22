@@ -1,0 +1,46 @@
+C++ HTTP Server Workflow
+
+1. Initialization
+   +-------------------+
+   | start server      | ---> Creates socket, binds to 8080, listens.
+   +-------------------+
+
+2. Accepting Client
+   +-------------------+
+   | accept()          | ---> Server blocks until a client connects.
+   +-------------------+
+            |
+            v
+   +-------------------+
+   | spawn thread      | ---> Server spawns a new thread to handle client independently.
+   +-------------------+
+            |
+            v
+3. Reading Data
+   +-------------------+
+   | read()            | ---> Thread reads text data sent by the client.
+   +-------------------+
+            |
+            v
+4. Parsing Request
+   +-------------------+
+   | HttpRequest::parse| ---> Splits string into Method, Path, Version, Headers, and Body.
+   +-------------------+
+            |
+            v
+5. Processing
+   +-------------------+
+   | Router logic      | ---> Matches Method+Path (e.g., GET /) to execute the correct block.
+   +-------------------+
+            |
+            v
+6. Building Response
+   +-------------------+
+   | HttpResponse      | ---> Sets Status Code (200), Content-Type, and Body text.
+   +-------------------+
+            |
+            v
+7. Responding
+   +-------------------+
+   | send() & close()  | ---> Converts response to string, sends it back, and closes socket.
+   +-------------------+

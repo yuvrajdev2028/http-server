@@ -1,7 +1,11 @@
-#include<iostream>
-using namespace std;
+#include "server.hpp"
 
-int main(){
-    cout<<"hello world"<<endl;
+int main() {
+    // Create a server listening on port 8080
+    Server server(8080);
+    
+    // Start listening for connections forever
+    server.start();
+
     return 0;
 }
